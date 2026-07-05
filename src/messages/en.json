@@ -1,0 +1,405 @@
+{
+  "Common": {
+    "appName": "Talkotopia",
+    "appTagline": "Learn with joy",
+    "teacher": "Instructor",
+    "toman": "T",
+    "minutes": "min",
+    "hours": "h",
+    "lessons": "lessons",
+    "students": "students",
+    "enrolled": "enrolled",
+    "progress": "Progress",
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "locked": "Locked",
+    "watched": "Watched",
+    "free": "Free",
+    "buyNow": "Buy Now",
+    "addToCart": "Add to Cart",
+    "viewDetails": "View Details",
+    "backToHome": "Back to Home",
+    "backToCourses": "Back to Courses",
+    "search": "Search",
+    "filter": "Filter",
+    "apply": "Apply",
+    "reset": "Reset",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "next": "Next",
+    "previous": "Previous",
+    "loading": "Loading...",
+    "noResults": "No results found",
+    "send": "Send",
+    "verify": "Verify",
+    "continue": "Continue"
+  },
+  "Nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "shop": "Shop",
+    "student": "Student Panel",
+    "teacher": "Teacher Panel",
+    "admin": "Admin Panel",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "language": "FA",
+    "languageAria": "Switch to Farsi",
+    "certificate": "Verify Certificate",
+    "checkout": "Checkout"
+  },
+  "HomePage": {
+    "nav": {
+      "logo": "Talkotopia",
+      "logoSub": "Learn · Play · Grow",
+      "links": {
+        "courses": "Courses",
+        "shop": "Shop",
+        "student": "Student",
+        "teacher": "Teacher"
+      },
+      "login": "Login",
+      "signup": "Sign Up",
+      "language": "FA",
+      "languageAria": "Switch to Farsi"
+    },
+    "hero": {
+      "badge": "A playful learning universe",
+      "headline": "Where curious minds grow with friendly guides",
+      "body": "Talkotopia is a warm bilingual learning home for kids, teens and lifelong learners. Watch playful lessons, collect badges, and earn real certificates — all in your language.",
+      "primaryCta": "Explore Courses",
+      "secondaryCta": "Sign in",
+      "floatOne": "100+ playful lessons",
+      "floatTwo": "Bilingual · EN / FA",
+      "mascotLabel": "Hi, I'm Tako!"
+    },
+    "courses": {
+      "eyebrow": "Featured courses",
+      "title": "Hand-picked for joyful learning",
+      "viewAll": "View all courses",
+      "priceLabel": "Price",
+      "items": [
+        {
+          "slug": "painting-with-tako",
+          "title": "Painting with Tako",
+          "subtitle": "Colors, brushes and happy accidents",
+          "instructor": "Ms. Laleh Karimi",
+          "rating": "4.9",
+          "price": "320,000",
+          "tag": "Ages 6-10"
+        },
+        {
+          "slug": "english-adventures",
+          "title": "English Adventures",
+          "subtitle": "Phonics to first sentences",
+          "instructor": "Mr. Daniel Ross",
+          "rating": "4.8",
+          "price": "450,000",
+          "tag": "Ages 7-12"
+        },
+        {
+          "slug": "math-quest",
+          "title": "Math Quest",
+          "subtitle": "Numbers tell a story",
+          "instructor": "Dr. Sina Mehrabi",
+          "rating": "4.7",
+          "price": "380,000",
+          "tag": "Ages 8-13"
+        },
+        {
+          "slug": "music-garden",
+          "title": "Music Garden",
+          "subtitle": "First rhythms and songs",
+          "instructor": "Ms. Ava Tehrani",
+          "rating": "4.9",
+          "price": "290,000",
+          "tag": "Ages 5-9"
+        }
+      ]
+    },
+    "shop": {
+      "eyebrow": "Talkotopia Shop",
+      "title": "Friendly kits, books and plushies",
+      "body": "Bring the magic off-screen. Picture books, art kits, and a huggable Tako plush companion for every young learner."
+    }
+  },
+  "CoursesPage": {
+    "title": "All Courses",
+    "subtitle": "Find the perfect next adventure",
+    "searchPlaceholder": "Search courses, topics, instructors...",
+    "filters": {
+      "title": "Filters",
+      "categories": "Categories",
+      "ageGroup": "Age Group",
+      "priceRange": "Price Range",
+      "rating": "Rating",
+      "sort": "Sort by"
+    },
+    "sortOptions": {
+      "popular": "Most Popular",
+      "newest": "Newest",
+      "priceLow": "Price: Low to High",
+      "priceHigh": "Price: High to Low",
+      "rating": "Top Rated"
+    },
+    "categories": {
+      "art": "Art & Creativity",
+      "language": "Languages",
+      "math": "Math & Logic",
+      "music": "Music",
+      "science": "Science",
+      "coding": "Coding"
+    },
+    "results": "courses found",
+    "empty": "No courses match your filters. Try resetting."
+  },
+  "CourseWatch": {
+    "preview": "Preview",
+    "startLearning": "Start Learning",
+    "continueLearning": "Continue",
+    "markComplete": "Mark as Complete",
+    "tabs": {
+      "description": "Description",
+      "attachments": "Attachments",
+      "comments": "Comments"
+    },
+    "whatYouLearn": "What you'll learn",
+    "requirements": "Requirements",
+    "instructor": "Meet your instructor",
+    "leaveComment": "Leave a comment",
+    "commentPlaceholder": "Share your thoughts...",
+    "postComment": "Post",
+    "downloadAttachment": "Download",
+    "chapters": "Chapters",
+    "lessonsCount": "lessons",
+    "duration": "duration"
+  },
+  "Checkout": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "emptyDescription": "Browse courses and add your favorites to get started.",
+    "browseCourses": "Browse Courses",
+    "orderSummary": "Order Summary",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "tax": "Processing Fee",
+    "total": "Total",
+    "couponCode": "Coupon Code",
+    "applyCoupon": "Apply",
+    "paymentMethod": "Payment Method",
+    "zarinpal": "Zarinpal Gateway",
+    "wallet": "Talkotopia Wallet",
+    "completePayment": "Complete Payment",
+    "remove": "Remove",
+    "securePayment": "Secure 256-bit encrypted payment"
+  },
+  "Certificate": {
+    "title": "Certificate Verification",
+    "subtitle": "Enter a certificate ID to verify its authenticity",
+    "placeholder": "e.g. TKP-2026-00123",
+    "verify": "Verify Certificate",
+    "validTitle": "Certificate Verified",
+    "invalidTitle": "Invalid Certificate",
+    "invalidBody": "This certificate ID was not found in our registry. Please double-check and try again.",
+    "holder": "Certificate Holder",
+    "course": "Course",
+    "issueDate": "Issue Date",
+    "id": "Certificate ID",
+    "score": "Final Score",
+    "downloadPdf": "Download PDF",
+    "tryAgain": "Verify Another"
+  },
+  "Auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to continue your learning journey",
+      "email": "Email or Username",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign In",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Create one"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Join thousands of joyful learners",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Laleh Karimi",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "At least 8 characters",
+      "role": "I am a...",
+      "roleStudent": "Student",
+      "roleTeacher": "Teacher",
+      "agree": "I agree to the Terms & Privacy Policy",
+      "submit": "Create Account",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Sign in"
+    },
+    "otp": {
+      "title": "Verify your code",
+      "subtitle": "We sent a 5-digit code to your email",
+      "resend": "Didn't receive it? Resend in",
+      "resendNow": "Resend now",
+      "verify": "Verify & Continue",
+      "back": "Use a different email"
+    },
+    "forgot": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email and we'll send you a reset code",
+      "submit": "Send Reset Code",
+      "back": "Back to login"
+    }
+  },
+  "StudentDashboard": {
+    "welcome": "Welcome back",
+    "subtitle": "Pick up where you left off",
+    "nav": {
+      "overview": "Overview",
+      "myCourses": "My Courses",
+      "payments": "Payment History",
+      "certificates": "Certificates",
+      "settings": "Settings"
+    },
+    "stats": {
+      "enrolled": "Enrolled Courses",
+      "completed": "Completed",
+      "hoursLearned": "Hours Learned",
+      "badges": "Badges Earned"
+    },
+    "myCourses": {
+      "title": "Continue Learning",
+      "progress": "Progress",
+      "continue": "Continue",
+      "completed": "Completed",
+      "viewCertificate": "View Certificate"
+    },
+    "payments": {
+      "title": "Payment History",
+      "date": "Date",
+      "course": "Course",
+      "amount": "Amount",
+      "status": "Status",
+      "method": "Method",
+      "invoice": "Invoice",
+      "paid": "Paid",
+      "refunded": "Refunded",
+      "pending": "Pending"
+    }
+  },
+  "TeacherDashboard": {
+    "welcome": "Teacher Studio",
+    "subtitle": "Create, manage and track your courses",
+    "nav": {
+      "overview": "Overview",
+      "courses": "My Courses",
+      "createCourse": "Create Course",
+      "uploadMedia": "Upload Media",
+      "sales": "Sales & Analytics",
+      "students": "Students"
+    },
+    "stats": {
+      "totalStudents": "Total Students",
+      "totalRevenue": "Total Revenue",
+      "activeCourses": "Active Courses",
+      "avgRating": "Avg. Rating"
+    },
+    "createCourse": {
+      "title": "Create a New Course",
+      "basicInfo": "Basic Information",
+      "titleField": "Course Title",
+      "subtitleField": "Subtitle",
+      "descriptionField": "Description",
+      "categoryField": "Category",
+      "ageField": "Target Age Group",
+      "priceField": "Price (Toman)",
+      "languageField": "Language",
+      "coverUpload": "Cover Image",
+      "coverHint": "PNG or JPG, max 2MB",
+      "chapters": "Chapters & Lessons",
+      "addChapter": "Add Chapter",
+      "chapterTitle": "Chapter Title",
+      "lessons": "Lessons",
+      "addLesson": "Add Lesson",
+      "lessonTitle": "Lesson Title",
+      "lessonDuration": "Duration (min)",
+      "lessonVideo": "Video File",
+      "publish": "Publish Course",
+      "saveDraft": "Save Draft"
+    },
+    "uploadMedia": {
+      "title": "Media Library",
+      "subtitle": "Upload videos, images and documents",
+      "dragDrop": "Drag & drop files here, or click to browse",
+      "maxSize": "Max file size: 2GB per video",
+      "uploading": "Uploading...",
+      "uploaded": "Uploaded",
+      "failed": "Failed"
+    },
+    "sales": {
+      "title": "Sales & Analytics",
+      "revenue": "Revenue",
+      "enrollments": "Enrollments",
+      "conversion": "Conversion Rate",
+      "topCourses": "Top Performing Courses",
+      "monthlyRevenue": "Monthly Revenue",
+      "enrollmentTrend": "Enrollment Trend"
+    }
+  },
+  "AdminDashboard": {
+    "welcome": "Admin Console",
+    "subtitle": "Platform-wide insights and management",
+    "nav": {
+      "overview": "Overview",
+      "users": "User Management",
+      "courses": "Course Management",
+      "finance": "Financial Reports",
+      "settings": "Platform Settings"
+    },
+    "stats": {
+      "totalUsers": "Total Users",
+      "totalRevenue": "Platform Revenue",
+      "activeCourses": "Active Courses",
+      "completionRate": "Completion Rate"
+    },
+    "users": {
+      "title": "User Management",
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "joinedAt": "Joined",
+      "status": "Status",
+      "actions": "Actions",
+      "active": "Active",
+      "suspended": "Suspended",
+      "viewProfile": "View",
+      "suspend": "Suspend",
+      "activate": "Activate"
+    },
+    "courses": {
+      "title": "Course Management",
+      "instructor": "Instructor",
+      "students": "Students",
+      "revenue": "Revenue",
+      "status": "Status",
+      "published": "Published",
+      "draft": "Draft",
+      "pending": "Pending Review"
+    },
+    "finance": {
+      "title": "Financial Reports",
+      "grossRevenue": "Gross Revenue",
+      "platformShare": "Platform Share",
+      "teacherPayouts": "Teacher Payouts",
+      "refunds": "Refunds",
+      "netRevenue": "Net Revenue",
+      "monthlyBreakdown": "Monthly Breakdown"
+    }
+  }
+}

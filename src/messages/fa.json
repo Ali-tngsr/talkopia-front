@@ -1,0 +1,405 @@
+{
+  "Common": {
+    "appName": "تالکوتوپیا",
+    "appTagline": "با شادی یاد بگیر",
+    "teacher": "مدرس",
+    "toman": "ت",
+    "minutes": "دقیقه",
+    "hours": "ساعت",
+    "lessons": "درس",
+    "students": "دانش‌آموز",
+    "enrolled": "ثبت‌نام کرده",
+    "progress": "پیشرفت",
+    "completed": "تکمیل شده",
+    "inProgress": "در حال انجام",
+    "locked": "قفل شده",
+    "watched": "دیده شده",
+    "free": "رایگان",
+    "buyNow": "خرید آنی",
+    "addToCart": "افزودن به سبد",
+    "viewDetails": "مشاهده جزئیات",
+    "backToHome": "بازگشت به خانه",
+    "backToCourses": "بازگشت به دوره‌ها",
+    "search": "جستجو",
+    "filter": "فیلتر",
+    "apply": "اعمال",
+    "reset": "بازنشانی",
+    "save": "ذخیره",
+    "cancel": "انصراف",
+    "submit": "ارسال",
+    "next": "بعدی",
+    "previous": "قبلی",
+    "loading": "در حال بارگذاری...",
+    "noResults": "نتیجه‌ای یافت نشد",
+    "send": "ارسال",
+    "verify": "تأیید",
+    "continue": "ادامه"
+  },
+  "Nav": {
+    "home": "خانه",
+    "courses": "دوره‌ها",
+    "shop": "فروشگاه",
+    "student": "پنل دانش‌آموز",
+    "teacher": "پنل مدرس",
+    "admin": "پنل مدیریت",
+    "login": "ورود",
+    "signup": "ثبت‌نام",
+    "logout": "خروج",
+    "language": "EN",
+    "languageAria": "تغییر به انگلیسی",
+    "certificate": "استعلام گواهینامه",
+    "checkout": "تسویه حساب"
+  },
+  "HomePage": {
+    "nav": {
+      "logo": "تالکوتوپیا",
+      "logoSub": "یاد بگیر · بازی کن · رشد کن",
+      "links": {
+        "courses": "دوره‌ها",
+        "shop": "فروشگاه",
+        "student": "دانش‌آموز",
+        "teacher": "مدرس"
+      },
+      "login": "ورود",
+      "signup": "ثبت‌نام",
+      "language": "EN",
+      "languageAria": "تغییر به انگلیسی"
+    },
+    "hero": {
+      "badge": "جهانی شاد برای یادگیری",
+      "headline": "جایی که ذهن‌های کنجکاو با راهنمایانی دوستانه رشد می‌کنند",
+      "body": "تالکوتوپیا یک خانهٔ یادگیری گرم و دوزبانه برای کودکان، نوجوانان و یادگیرندگان همیشگی است. درس‌های شاد را تماشا کن، نشان جمع کن و گواهینامهٔ واقعی بگیر — همه به زبان خودت.",
+      "primaryCta": "کاوش دوره‌ها",
+      "secondaryCta": "ورود",
+      "floatOne": "بیش از ۱۰۰ درس شاد",
+      "floatTwo": "دوزبانه · فا / EN",
+      "mascotLabel": "سلام، تاکو هستم!"
+    },
+    "courses": {
+      "eyebrow": "دوره‌های منتخب",
+      "title": "برای یادگیری شاد دست‌چین شده",
+      "viewAll": "همهٔ دوره‌ها",
+      "priceLabel": "قیمت",
+      "items": [
+        {
+          "slug": "painting-with-tako",
+          "title": "نقاشی با تاکو",
+          "subtitle": "رنگ‌ها، قلم‌موها و اشتباهات خوشبخت",
+          "instructor": "خانم لاله کریمی",
+          "rating": "۴٫۹",
+          "price": "۳۲۰٬۰۰۰",
+          "tag": "۶ تا ۱۰ سال"
+        },
+        {
+          "slug": "english-adventures",
+          "title": "ماجراجویی انگلیسی",
+          "subtitle": "از فونتیک تا جمله‌های اول",
+          "instructor": "آقانیل دانیل راس",
+          "rating": "۴٫۸",
+          "price": "۴۵۰٬۰۰۰",
+          "tag": "۷ تا ۱۲ سال"
+        },
+        {
+          "slug": "math-quest",
+          "title": "جستجوی ریاضی",
+          "subtitle": "اعداد داستانی برای گفتن دارند",
+          "instructor": "دکتر سینا محرابی",
+          "rating": "۴٫۷",
+          "price": "۳۸۰٬۰۰۰",
+          "tag": "۸ تا ۱۳ سال"
+        },
+        {
+          "slug": "music-garden",
+          "title": "باغ موسیقی",
+          "subtitle": "اولین ریتم‌ها و ترانه‌ها",
+          "instructor": "خانم آوا تهرانی",
+          "rating": "۴٫۹",
+          "price": "۲۹۰٬۰۰۰",
+          "tag": "۵ تا ۹ سال"
+        }
+      ]
+    },
+    "shop": {
+      "eyebrow": "فروشگاه تالکوتوپیا",
+      "title": "کیت‌ها، کتاب‌ها و عروسک‌های دوست‌داشتنی",
+      "body": "جادو را از صفحه بیرون بیاور. کتاب‌های مصور، کیت‌های هنری و یک عروسک نرم تاکو برای هر یادگیرندهٔ جوان."
+    }
+  },
+  "CoursesPage": {
+    "title": "همهٔ دوره‌ها",
+    "subtitle": "ماجراجویی بعدی‌ات را پیدا کن",
+    "searchPlaceholder": "جستجوی دوره، موضوع، مدرس...",
+    "filters": {
+      "title": "فیلترها",
+      "categories": "دسته‌بندی",
+      "ageGroup": "گروه سنی",
+      "priceRange": "محدوده قیمت",
+      "rating": "امتیاز",
+      "sort": "مرتب‌سازی"
+    },
+    "sortOptions": {
+      "popular": "محبوب‌ترین",
+      "newest": "جدیدترین",
+      "priceLow": "قیمت: کم به زیاد",
+      "priceHigh": "قیمت: زیاد به کم",
+      "rating": "بالاترین امتیاز"
+    },
+    "categories": {
+      "art": "هنر و خلاقیت",
+      "language": "زبان‌ها",
+      "math": "ریاضی و منطق",
+      "music": "موسیقی",
+      "science": "علوم",
+      "coding": "کدنویسی"
+    },
+    "results": "دوره یافت شد",
+    "empty": "دوره‌ای با این فیلترها پیدا نشد. بازنشانی را امتحان کن."
+  },
+  "CourseWatch": {
+    "preview": "پیش‌نمایش",
+    "startLearning": "شروع یادگیری",
+    "continueLearning": "ادامه بده",
+    "markComplete": "علامت‌گذاری به‌عنوان تکمیل شده",
+    "tabs": {
+      "description": "توضیحات",
+      "attachments": "پیوست‌ها",
+      "comments": "نظرات"
+    },
+    "whatYouLearn": "چه چیزی یاد می‌گیری",
+    "requirements": "پیش‌نیازها",
+    "instructor": "با مدرست آشنا شو",
+    "leaveComment": "نظرت را بنویس",
+    "commentPlaceholder": "افکارت را به اشتراک بگذار...",
+    "postComment": "ارسال",
+    "downloadAttachment": "دانلود",
+    "chapters": "فصل‌ها",
+    "lessonsCount": "درس",
+    "duration": "مدت"
+  },
+  "Checkout": {
+    "title": "سبد خرید تو",
+    "empty": "سبدت خالیه",
+    "emptyDescription": "دوره‌ها را مرور کن و دلخواهت رو اضافه کن.",
+    "browseCourses": "مرور دوره‌ها",
+    "orderSummary": "خلاصه سفارش",
+    "subtotal": "جمع کل",
+    "discount": "تخفیف",
+    "tax": "کارمزد پرداخت",
+    "total": "مبلغ نهایی",
+    "couponCode": "کد تخفیف",
+    "applyCoupon": "اعمال",
+    "paymentMethod": "روش پرداخت",
+    "zarinpal": "درگاه زرین‌پال",
+    "wallet": "کیف پول تالکوتوپیا",
+    "completePayment": "تکمیل پرداخت",
+    "remove": "حذف",
+    "securePayment": "پرداخت رمزگذاری‌شده ۲۵۶ بیتی"
+  },
+  "Certificate": {
+    "title": "استعلام گواهینامه",
+    "subtitle": "شناسه گواهینامه را وارد کن تا اصالتش تأیید شود",
+    "placeholder": "مثلاً TKP-2026-00123",
+    "verify": "تأیید گواهینامه",
+    "validTitle": "گواهینامه معتبر",
+    "invalidTitle": "گواهینامه نامعتبر",
+    "invalidBody": "این شناسه در سیستم ما یافت نشد. دوباره بررسی کن.",
+    "holder": "دارنده گواهینامه",
+    "course": "دوره",
+    "issueDate": "تاریخ صدور",
+    "id": "شناسه گواهینامه",
+    "score": "امتیاز نهایی",
+    "downloadPdf": "دانلود PDF",
+    "tryAgain": "استعلام گواهینامه‌ای دیگر"
+  },
+  "Auth": {
+    "login": {
+      "title": "خوش آمدی",
+      "subtitle": "برای ادامهٔ مسیر یادگیری‌ات وارد شو",
+      "email": "ایمیل یا نام کاربری",
+      "emailPlaceholder": "you@example.com",
+      "password": "رمز عبور",
+      "passwordPlaceholder": "••••••••",
+      "rememberMe": "مرا به خاطر بسپار",
+      "forgotPassword": "رمز را فراموش کرده‌ای؟",
+      "submit": "ورود",
+      "noAccount": "حساب کاربری نداری؟",
+      "signupLink": "یکی بساز"
+    },
+    "register": {
+      "title": "حساب کاربری بساز",
+      "subtitle": "به هزاران یادگیرندهٔ شاد بپیوند",
+      "fullName": "نام و نام خانوادگی",
+      "fullNamePlaceholder": "لاله کریمی",
+      "email": "ایمیل",
+      "emailPlaceholder": "you@example.com",
+      "password": "رمز عبور",
+      "passwordPlaceholder": "حداقل ۸ کاراکتر",
+      "role": "من یک...",
+      "roleStudent": "دانش‌آموز",
+      "roleTeacher": "مدرس",
+      "agree": "با قوانین و سیاست حریم خصوصی موافقم",
+      "submit": "ساخت حساب",
+      "haveAccount": "حساب کاربری داری؟",
+      "loginLink": "وارد شو"
+    },
+    "otp": {
+      "title": "کد را تأیید کن",
+      "subtitle": "یک کد ۵ رقمی به ایمیلت فرستادیم",
+      "resend": "نرسید؟ ارسال مجدد تا",
+      "resendNow": "ارسال مجدد",
+      "verify": "تأیید و ادامه",
+      "back": "ایمیل دیگری استفاده کن"
+    },
+    "forgot": {
+      "title": "بازنشانی رمز عبور",
+      "subtitle": "ایمیلت را وارد کن تا کد بازنشانی بفرستیم",
+      "submit": "ارسال کد بازنشانی",
+      "back": "بازگشت به ورود"
+    }
+  },
+  "StudentDashboard": {
+    "welcome": "خوش آمدی",
+    "subtitle": "از جایی که رها کردی ادامه بده",
+    "nav": {
+      "overview": "نمای کلی",
+      "myCourses": "دوره‌های من",
+      "payments": "تاریخچه پرداخت",
+      "certificates": "گواهینامه‌ها",
+      "settings": "تنظیمات"
+    },
+    "stats": {
+      "enrolled": "دوره‌های ثبت‌نام شده",
+      "completed": "تکمیل شده",
+      "hoursLearned": "ساعت یادگیری",
+      "badges": "نشان‌های گرفته شده"
+    },
+    "myCourses": {
+      "title": "یادگیری را ادامه بده",
+      "progress": "پیشرفت",
+      "continue": "ادامه",
+      "completed": "تکمیل شده",
+      "viewCertificate": "مشاهده گواهینامه"
+    },
+    "payments": {
+      "title": "تاریخچه پرداخت",
+      "date": "تاریخ",
+      "course": "دوره",
+      "amount": "مبلغ",
+      "status": "وضعیت",
+      "method": "روش",
+      "invoice": "فاکتور",
+      "paid": "پرداخت شده",
+      "refunded": "برگشت خورده",
+      "pending": "در انتظار"
+    }
+  },
+  "TeacherDashboard": {
+    "welcome": "استودیوی مدرس",
+    "subtitle": "دوره‌هایت را بساز، مدیریت کن و دنبال کن",
+    "nav": {
+      "overview": "نمای کلی",
+      "courses": "دوره‌های من",
+      "createCourse": "ساخت دوره",
+      "uploadMedia": "آپلود رسانه",
+      "sales": "فروش و تحلیل",
+      "students": "دانش‌آموزان"
+    },
+    "stats": {
+      "totalStudents": "کل دانش‌آموزان",
+      "totalRevenue": "درآمد کل",
+      "activeCourses": "دوره‌های فعال",
+      "avgRating": "میانگین امتیاز"
+    },
+    "createCourse": {
+      "title": "ساخت دورهٔ جدید",
+      "basicInfo": "اطلاعات اولیه",
+      "titleField": "عنوان دوره",
+      "subtitleField": "زیرعنوان",
+      "descriptionField": "توضیحات",
+      "categoryField": "دسته‌بندی",
+      "ageField": "گروه سنی هدف",
+      "priceField": "قیمت (تومان)",
+      "languageField": "زبان",
+      "coverUpload": "تصویر کاور",
+      "coverHint": "PNG یا JPG، حداکثر ۲ مگابایت",
+      "chapters": "فصل‌ها و درس‌ها",
+      "addChapter": "افزودن فصل",
+      "chapterTitle": "عنوان فصل",
+      "lessons": "درس‌ها",
+      "addLesson": "افزودن درس",
+      "lessonTitle": "عنوان درس",
+      "lessonDuration": "مدت (دقیقه)",
+      "lessonVideo": "فایل ویدیو",
+      "publish": "انتشار دوره",
+      "saveDraft": "ذخیره پیش‌نویس"
+    },
+    "uploadMedia": {
+      "title": "کتابخانه رسانه",
+      "subtitle": "ویدیو، تصویر و سند آپلود کن",
+      "dragDrop": "فایل‌ها را اینجا بکش و رها کن، یا کلیک کن",
+      "maxSize": "حداکثر حجم هر ویدیو: ۲ گیگابایت",
+      "uploading": "در حال آپلود...",
+      "uploaded": "آپلود شد",
+      "failed": "ناموفق"
+    },
+    "sales": {
+      "title": "فروش و تحلیل",
+      "revenue": "درآمد",
+      "enrollments": "ثبت‌نام‌ها",
+      "conversion": "نرخ تبدیل",
+      "topCourses": "دوره‌های برتر",
+      "monthlyRevenue": "درآمد ماهانه",
+      "enrollmentTrend": "روند ثبت‌نام"
+    }
+  },
+  "AdminDashboard": {
+    "welcome": "کنسول مدیریت",
+    "subtitle": "بینش و مدیریت کل پلتفرم",
+    "nav": {
+      "overview": "نمای کلی",
+      "users": "مدیریت کاربران",
+      "courses": "مدیریت دوره‌ها",
+      "finance": "گزارش‌های مالی",
+      "settings": "تنظیمات پلتفرم"
+    },
+    "stats": {
+      "totalUsers": "کل کاربران",
+      "totalRevenue": "درآمد پلتفرم",
+      "activeCourses": "دوره‌های فعال",
+      "completionRate": "نرخ تکمیل"
+    },
+    "users": {
+      "title": "مدیریت کاربران",
+      "name": "نام",
+      "email": "ایمیل",
+      "role": "نقش",
+      "joinedAt": "عضویت",
+      "status": "وضعیت",
+      "actions": "عملیات",
+      "active": "فعال",
+      "suspended": "معلق",
+      "viewProfile": "مشاهده",
+      "suspend": "تعلیق",
+      "activate": "فعال‌سازی"
+    },
+    "courses": {
+      "title": "مدیریت دوره‌ها",
+      "instructor": "مدرس",
+      "students": "دانش‌آموز",
+      "revenue": "درآمد",
+      "status": "وضعیت",
+      "published": "منتشر شده",
+      "draft": "پیش‌نویس",
+      "pending": "در انتظار بررسی"
+    },
+    "finance": {
+      "title": "گزارش‌های مالی",
+      "grossRevenue": "درآمد ناخالص",
+      "platformShare": "سهم پلتفرم",
+      "teacherPayouts": "پرداخت به مدرسان",
+      "refunds": "بازگشت وجه",
+      "netRevenue": "درآمد خالص",
+      "monthlyBreakdown": "تفکیک ماهانه"
+    }
+  }
+}
