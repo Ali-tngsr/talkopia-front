@@ -15,6 +15,7 @@ import { Progress } from '@/components/ui/progress';
 import { useLocale, useTranslations } from '@/lib/i18n';
 import { useAppStore } from '@/lib/store';
 import { courses, teacherStats, teacherMonthlyRevenue, teacherTopCourses } from '@/lib/mockData';
+import { DashboardLayout } from '@/components/talkotopia/DashboardLayout';
 
 type Tab = 'overview' | 'courses' | 'createCourse' | 'uploadMedia' | 'sales' | 'students';
 
@@ -148,29 +149,9 @@ export function TeacherDashboard() {
         <p className="mt-1 font-medium text-[#5E6646]/70">{t('subtitle')}</p>
       </header>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[220px_1fr]">
-        <aside>
-          <nav className="sticky top-32 space-y-1 rounded-[2rem] border border-[#5E6646]/10 bg-white/80 p-3 shadow-sm">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setTab(item.id)}
-                  className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-black transition ${
-                    tab === item.id ? 'bg-[#9EB766] text-white shadow-sm' : 'text-[#5E6646]/70 hover:bg-[#F2EED9]'
-                  }`}
-                >
-                  <Icon className="h-4 w-4" /> {item.label}
-                </button>
-              );
-            })}
-          </nav>
-        </aside>
-
-        <main>
-          {/* Overview */}
-          {tab === 'overview' && (
+      <DashboardLayout navItems={navItems} activeTab={tab} onTabChange={(id) => setTab(id as Tab)}>
+        {/* Overview */}
+        {tab === 'overview' && (
             <div className="animate-fade-in space-y-6">
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {stats.map((s) => {
@@ -342,7 +323,7 @@ export function TeacherDashboard() {
                             <Input
                               value={ch.titleEn}
                               onChange={(e) => updateChapterTitle(ch.id, e.target.value)}
-                              className="rounded-xl border-[#9EB766]/30 bg-white font-black text-[#5E6646]"
+                              className="rounded-xl border-[#9EB766]/30 bg-white text-sm font-black text-[#5E6646] sm:text-base"
                             />
                             <button onClick={() => removeChapter(ch.id)} className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-full bg-white text-[#5E6646]/60 hover:bg-red-100 hover:text-red-600">
                               <Trash2 className="h-4 w-4" />
@@ -350,26 +331,30 @@ export function TeacherDashboard() {
                           </div>
                           <div className="mt-2 space-y-2">
                             {ch.lessons.map((l) => (
-                              <div key={l.id} className="flex items-center gap-2 rounded-xl bg-white p-2">
-                                <FileVideo className="h-4 w-4 flex-shrink-0 text-[#9EB766]" />
-                                <Input
-                                  value={l.titleEn}
-                                  onChange={(e) => updateLesson(ch.id, l.id, { titleEn: e.target.value })}
-                                  className="h-9 rounded-lg border-[#9EB766]/30 bg-[#F2EED9]/40 text-sm font-bold text-[#5E6646]"
-                                />
-                                <Input
-                                  type="number"
-                                  value={l.duration}
-                                  onChange={(e) => updateLesson(ch.id, l.id, { duration: Number(e.target.value) })}
-                                  className="h-9 w-20 rounded-lg border-[#9EB766]/30 bg-[#F2EED9]/40 text-sm font-bold text-[#5E6646]"
-                                />
-                                <label className="cursor-pointer rounded-lg bg-[#F2EED9] px-3 py-2 text-xs font-black text-[#5E6646]">
-                                  {l.videoFile || (isRtl ? 'ویدیو' : 'Video')}
-                                  <input type="file" className="hidden" accept="video/*" onChange={(e) => updateLesson(ch.id, l.id, { videoFile: e.target.files?.[0]?.name ?? '' })} />
-                                </label>
-                                <button onClick={() => removeLesson(ch.id, l.id)} className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-full text-[#5E6646]/60 hover:bg-red-100 hover:text-red-600">
-                                  <Trash2 className="h-3.5 w-3.5" />
-                                </button>
+                              <div key={l.id} className="flex flex-col gap-2 rounded-xl bg-white p-2.5 sm:flex-row sm:items-center">
+                                <div className="flex items-center gap-2">
+                                  <FileVideo className="h-4 w-4 flex-shrink-0 text-[#9EB766]" />
+                                  <Input
+                                    value={l.titleEn}
+                                    onChange={(e) => updateLesson(ch.id, l.id, { titleEn: e.target.value })}
+                                    className="h-9 rounded-lg border-[#9EB766]/30 bg-[#F2EED9]/40 text-sm font-bold text-[#5E6646]"
+                                  />
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Input
+                                    type="number"
+                                    value={l.duration}
+                                    onChange={(e) => updateLesson(ch.id, l.id, { duration: Number(e.target.value) })}
+                                    className="h-9 w-20 flex-shrink-0 rounded-lg border-[#9EB766]/30 bg-[#F2EED9]/40 text-sm font-bold text-[#5E6646]"
+                                  />
+                                  <label className="flex-shrink-0 cursor-pointer rounded-lg bg-[#F2EED9] px-3 py-2 text-xs font-black text-[#5E6646]">
+                                    <span className="block max-w-[80px] truncate sm:max-w-none">{l.videoFile || (isRtl ? 'ویدیو' : 'Video')}</span>
+                                    <input type="file" className="hidden" accept="video/*" onChange={(e) => updateLesson(ch.id, l.id, { videoFile: e.target.files?.[0]?.name ?? '' })} />
+                                  </label>
+                                  <button onClick={() => removeLesson(ch.id, l.id)} className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-full text-[#5E6646]/60 hover:bg-red-100 hover:text-red-600">
+                                    <Trash2 className="h-3.5 w-3.5" />
+                                  </button>
+                                </div>
                               </div>
                             ))}
                             <button onClick={() => addLesson(ch.id)} className="flex w-full items-center justify-center gap-1 rounded-xl border border-dashed border-[#9EB766]/40 py-2 text-xs font-black text-[#9EB766] transition hover:bg-[#9EB766]/5">
@@ -505,8 +490,7 @@ export function TeacherDashboard() {
               </Card>
             </div>
           )}
-        </main>
-      </div>
+      </DashboardLayout>
     </div>
   );
 }

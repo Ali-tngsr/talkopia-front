@@ -65,8 +65,8 @@ export function CourseWatchPage({ slug }: { slug: string }) {
         {tCommon('backToCourses')}
       </button>
 
-      <div className="grid gap-6 lg:grid-cols-[1.7fr_1fr]">
-        <div className="space-y-5">
+      <div className="grid gap-4 lg:grid-cols-[1.7fr_1fr] lg:gap-6">
+        <div className="space-y-4 sm:space-y-5">
           {/* Video player */}
           <VideoPlayer title={title} emoji={course.emoji} />
 

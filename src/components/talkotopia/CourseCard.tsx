@@ -59,7 +59,7 @@ export function CourseCard({ course, index = 0 }: { course: Course; index?: numb
             <span className="text-[10px] font-black uppercase tracking-wider text-[#9EB766]">{t('toman')}</span>
             <span className="text-lg font-black text-[#5E6646]">{isRtl ? course.priceLabel.replace(/,/g, '٬') : course.priceLabel}</span>
           </div>
-          <div className="flex gap-2 pt-1">
+          <div className="flex flex-col gap-2 pt-1 sm:flex-row">
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -77,7 +77,7 @@ export function CourseCard({ course, index = 0 }: { course: Course; index?: numb
             >
               {t('addToCart')}
             </button>
-            <span className="flex-1 rounded-full bg-[#9EB766] py-2.5 text-xs font-black text-white opacity-0 transition group-hover:opacity-100">
+            <span className="hidden flex-1 items-center justify-center rounded-full bg-[#9EB766] py-2.5 text-xs font-black text-white opacity-0 transition group-hover:opacity-100 sm:flex">
               {t('viewDetails')}
             </span>
           </div>

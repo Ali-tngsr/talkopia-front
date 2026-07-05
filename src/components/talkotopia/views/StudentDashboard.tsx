@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { useLocale, useTranslations } from '@/lib/i18n';
 import { useAppStore } from '@/lib/store';
 import { courses, enrolledCourses, paymentHistory } from '@/lib/mockData';
+import { DashboardLayout } from '@/components/talkotopia/DashboardLayout';
 
 type Tab = 'overview' | 'myCourses' | 'payments' | 'certificates' | 'settings';
 
@@ -64,30 +65,7 @@ export function StudentDashboard() {
         <p className="mt-1 font-medium text-[#5E6646]/70">{t('subtitle')}</p>
       </header>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[220px_1fr]">
-        {/* Sidebar */}
-        <aside>
-          <nav className="sticky top-32 space-y-1 rounded-[2rem] border border-[#5E6646]/10 bg-white/80 p-3 shadow-sm">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setTab(item.id)}
-                  className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-black transition ${
-                    tab === item.id
-                      ? 'bg-[#9EB766] text-white shadow-sm'
-                      : 'text-[#5E6646]/70 hover:bg-[#F2EED9]'
-                  }`}
-                >
-                  <Icon className="h-4 w-4" /> {item.label}
-                </button>
-              );
-            })}
-          </nav>
-        </aside>
-
-        <main>
+      <DashboardLayout navItems={navItems} activeTab={tab} onTabChange={(id) => setTab(id as Tab)}>
           {/* Stats */}
           {tab === 'overview' && (
             <div className="animate-fade-in space-y-6">
@@ -201,9 +179,11 @@ export function StudentDashboard() {
           )}
 
           {tab === 'payments' && (
-            <Card className="animate-fade-in rounded-[2rem] border-0 bg-white/80 p-6 shadow-sm">
+            <Card className="animate-fade-in rounded-[2rem] border-0 bg-white/80 p-4 shadow-sm sm:p-6">
               <h2 className="mb-4 text-lg font-black text-[#5E6646]">{t('payments.title')}</h2>
-              <div className="overflow-x-auto">
+
+              {/* Desktop table */}
+              <div className="hidden overflow-x-auto sm:block">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="text-start text-xs font-black uppercase tracking-wider text-[#5E6646]/60">
@@ -243,6 +223,35 @@ export function StudentDashboard() {
                   </tbody>
                 </table>
               </div>
+
+              {/* Mobile cards */}
+              <div className="space-y-3 sm:hidden">
+                {paymentHistory.map((p) => (
+                  <div key={p.id} className="rounded-2xl border border-[#5E6646]/8 bg-[#F2EED9]/40 p-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-black text-[#5E6646]">{isRtl ? p.courseFa : p.courseEn}</p>
+                        <p className="mt-0.5 text-xs font-bold text-[#5E6646]/60">{p.date} · {p.method}</p>
+                      </div>
+                      <Badge className={
+                        p.status === 'paid' ? 'bg-[#9EB766]/20 text-[#9EB766] hover:bg-[#9EB766]/20' :
+                        p.status === 'refunded' ? 'bg-orange-100 text-orange-700 hover:bg-orange-100' :
+                        'bg-yellow-100 text-yellow-700 hover:bg-yellow-100'
+                      }>
+                        {t(`payments.${p.status}` as const)}
+                      </Badge>
+                    </div>
+                    <div className="mt-2 flex items-center justify-between border-t border-[#5E6646]/8 pt-2">
+                      <span className="text-sm font-black text-[#5E6646]">
+                        {isRtl ? p.amountLabel.replace(/,/g, '٬') : p.amountLabel} {tCommon('toman')}
+                      </span>
+                      <button className="inline-flex items-center gap-1 text-xs font-black text-[#9EB766]">
+                        <Download className="h-3 w-3" /> PDF
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </Card>
           )}
 
@@ -281,8 +290,7 @@ export function StudentDashboard() {
               <p className="text-sm font-medium text-[#5E6646]/60">Settings panel placeholder — profile, password, notifications.</p>
             </Card>
           )}
-        </main>
-      </div>
+      </DashboardLayout>
     </div>
   );
 }

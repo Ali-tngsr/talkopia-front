@@ -170,44 +170,46 @@ export function CoursesPage() {
   );
 
   return (
-    <div className="animate-fade-in mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="animate-fade-in mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
       <header className={isRtl ? 'text-right' : 'text-left'}>
-        <h1 className="text-4xl font-black text-[#5E6646] sm:text-5xl">{t('title')}</h1>
-        <p className="mt-2 text-lg font-medium text-[#5E6646]/70">{t('subtitle')}</p>
+        <h1 className="text-3xl font-black text-[#5E6646] sm:text-4xl lg:text-5xl">{t('title')}</h1>
+        <p className="mt-1.5 text-base font-medium text-[#5E6646]/70 sm:mt-2 sm:text-lg">{t('subtitle')}</p>
       </header>
 
-      <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+      <div className="mt-4 flex flex-col gap-2 sm:mt-6 sm:flex-row sm:gap-3">
         <div className="relative flex-1">
-          <Search className="pointer-events-none absolute top-1/2 -translate-y-1/2 text-[#5E6646]/40 start-4 h-5 w-5" />
+          <Search className="pointer-events-none absolute top-1/2 -translate-y-1/2 text-[#5E6646]/40 start-3.5 h-4 w-4 sm:start-4 sm:h-5 sm:w-5" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t('searchPlaceholder')}
-            className="h-12 rounded-2xl border-[#9EB766]/30 bg-white ps-12 text-base font-medium text-[#5E6646] shadow-sm"
+            className="h-11 rounded-2xl border-[#9EB766]/30 bg-white ps-11 text-sm font-medium text-[#5E6646] shadow-sm sm:h-12 sm:ps-12 sm:text-base"
           />
         </div>
-        <Select value={sort} onValueChange={setSort}>
-          <SelectTrigger className="h-12 w-full rounded-2xl border-[#9EB766]/30 bg-white px-4 font-bold text-[#5E6646] shadow-sm sm:w-56">
-            <SelectValue placeholder={t('filters.sort')} />
-          </SelectTrigger>
-          <SelectContent className="rounded-2xl">
-            <SelectItem value="popular">{t('sortOptions.popular')}</SelectItem>
-            <SelectItem value="newest">{t('sortOptions.newest')}</SelectItem>
-            <SelectItem value="priceLow">{t('sortOptions.priceLow')}</SelectItem>
-            <SelectItem value="priceHigh">{t('sortOptions.priceHigh')}</SelectItem>
-            <SelectItem value="rating">{t('sortOptions.rating')}</SelectItem>
-          </SelectContent>
-        </Select>
-        <Button
-          onClick={() => setShowFilters((s) => !s)}
-          variant="outline"
-          className="h-12 rounded-2xl border-[#9EB766]/40 bg-white px-5 font-black text-[#5E6646] lg:hidden"
-        >
-          <SlidersHorizontal className="me-2 h-4 w-4" /> {t('filters.title')}
-        </Button>
+        <div className="flex gap-2">
+          <Select value={sort} onValueChange={setSort}>
+            <SelectTrigger className="h-11 flex-1 rounded-2xl border-[#9EB766]/30 bg-white px-3 text-sm font-bold text-[#5E6646] shadow-sm sm:h-12 sm:flex-none sm:w-56 sm:px-4">
+              <SelectValue placeholder={t('filters.sort')} />
+            </SelectTrigger>
+            <SelectContent className="rounded-2xl">
+              <SelectItem value="popular">{t('sortOptions.popular')}</SelectItem>
+              <SelectItem value="newest">{t('sortOptions.newest')}</SelectItem>
+              <SelectItem value="priceLow">{t('sortOptions.priceLow')}</SelectItem>
+              <SelectItem value="priceHigh">{t('sortOptions.priceHigh')}</SelectItem>
+              <SelectItem value="rating">{t('sortOptions.rating')}</SelectItem>
+            </SelectContent>
+          </Select>
+          <Button
+            onClick={() => setShowFilters((s) => !s)}
+            variant="outline"
+            className="h-11 flex-shrink-0 rounded-2xl border-[#9EB766]/40 bg-white px-4 text-sm font-black text-[#5E6646] lg:hidden sm:h-12"
+          >
+            <SlidersHorizontal className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[260px_1fr]">
+      <div className="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-[260px_1fr]">
         <aside className="hidden lg:block">
           <div className="sticky top-32">{FilterPanel}</div>
         </aside>
@@ -219,20 +221,20 @@ export function CoursesPage() {
         )}
 
         <main>
-          <p className="mb-4 text-sm font-bold text-[#5E6646]/70">
+          <p className="mb-3 text-sm font-bold text-[#5E6646]/70 sm:mb-4">
             <span className="font-black text-[#5E6646]">{isRtl ? filtered.length.toLocaleString('fa-IR') : filtered.length}</span>{' '}
             {t('results')}
           </p>
           {filtered.length === 0 ? (
-            <div className="rounded-[2rem] border border-dashed border-[#5E6646]/20 bg-white/50 p-12 text-center">
-              <p className="text-5xl">🔍</p>
-              <p className="mt-4 font-bold text-[#5E6646]/70">{t('empty')}</p>
+            <div className="rounded-[1.5rem] border border-dashed border-[#5E6646]/20 bg-white/50 p-8 text-center sm:rounded-[2rem] sm:p-12">
+              <p className="text-4xl sm:text-5xl">🔍</p>
+              <p className="mt-3 font-bold text-[#5E6646]/70 sm:mt-4">{t('empty')}</p>
               <Button onClick={reset} className="mt-4 rounded-full bg-[#9EB766] font-black text-white hover:bg-[#8aa454]">
                 {t('reset')}
               </Button>
             </div>
           ) : (
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
               {filtered.map((c, i) => (
                 <CourseCard key={c.slug} course={c} index={i} />
               ))}

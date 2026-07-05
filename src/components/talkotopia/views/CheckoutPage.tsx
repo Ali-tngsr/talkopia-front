@@ -85,17 +85,17 @@ export function CheckoutPage() {
   }
 
   return (
-    <div className="animate-fade-in mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="animate-fade-in mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
       <header className={isRtl ? 'text-right' : 'text-left'}>
-        <h1 className="text-3xl font-black text-[#5E6646] sm:text-4xl">{t('title')}</h1>
+        <h1 className="text-2xl font-black text-[#5E6646] sm:text-3xl lg:text-4xl">{t('title')}</h1>
       </header>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1.5fr_1fr]">
+      <div className="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-[1.5fr_1fr]">
         {/* Cart items */}
         <div className="space-y-3">
           {cart.map((item) => (
-            <Card key={item.slug} className="flex items-center gap-4 rounded-[1.5rem] border-0 bg-white/80 p-4 shadow-sm">
-              <div className="grid h-20 w-20 flex-shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#F1BD79]/40 to-[#9EB766]/40 text-4xl">
+            <Card key={item.slug} className="flex items-center gap-3 rounded-[1.5rem] border-0 bg-white/80 p-3 shadow-sm sm:gap-4 sm:p-4">
+              <div className="grid h-16 w-16 flex-shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#F1BD79]/40 to-[#9EB766]/40 text-3xl sm:h-20 sm:w-20 sm:text-4xl">
                 {item.emoji}
               </div>
               <div className="min-w-0 flex-1">

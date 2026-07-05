@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { useLocale, useTranslations } from '@/lib/i18n';
 import { useAppStore } from '@/lib/store';
 import { courses, adminStats, adminUsers, adminCourses, adminMonthlyFinance } from '@/lib/mockData';
+import { DashboardLayout } from '@/components/talkotopia/DashboardLayout';
 
 type Tab = 'overview' | 'users' | 'courses' | 'finance' | 'settings';
 
@@ -73,29 +74,9 @@ export function AdminDashboard() {
         <p className="mt-1 font-medium text-[#5E6646]/70">{t('subtitle')}</p>
       </header>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[220px_1fr]">
-        <aside>
-          <nav className="sticky top-32 space-y-1 rounded-[2rem] border border-[#5E6646]/10 bg-white/80 p-3 shadow-sm">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setTab(item.id)}
-                  className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-black transition ${
-                    tab === item.id ? 'bg-[#5E6646] text-white shadow-sm' : 'text-[#5E6646]/70 hover:bg-[#F2EED9]'
-                  }`}
-                >
-                  <Icon className="h-4 w-4" /> {item.label}
-                </button>
-              );
-            })}
-          </nav>
-        </aside>
-
-        <main>
-          {/* Overview */}
-          {tab === 'overview' && (
+      <DashboardLayout navItems={navItems} activeTab={tab} onTabChange={(id) => setTab(id as Tab)} accentClass="bg-[#5E6646] text-white">
+        {/* Overview */}
+        {tab === 'overview' && (
             <div className="animate-fade-in space-y-6">
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {stats.map((s) => {
@@ -141,9 +122,11 @@ export function AdminDashboard() {
 
           {/* Users */}
           {tab === 'users' && (
-            <Card className="animate-fade-in rounded-[2rem] border-0 bg-white/80 p-6 shadow-sm">
+            <Card className="animate-fade-in rounded-[2rem] border-0 bg-white/80 p-4 shadow-sm sm:p-6">
               <h2 className="mb-4 font-black text-[#5E6646]">{t('users.title')}</h2>
-              <div className="overflow-x-auto">
+
+              {/* Desktop table */}
+              <div className="hidden overflow-x-auto sm:block">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="text-xs font-black uppercase tracking-wider text-[#5E6646]/60">
@@ -189,14 +172,51 @@ export function AdminDashboard() {
                   </tbody>
                 </table>
               </div>
+
+              {/* Mobile cards */}
+              <div className="space-y-3 sm:hidden">
+                {users.map((u) => (
+                  <div key={u.id} className="rounded-2xl border border-[#5E6646]/8 bg-[#F2EED9]/40 p-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-black text-[#5E6646]">{isRtl ? u.nameFa : u.nameEn}</p>
+                        <p className="mt-0.5 truncate text-xs font-bold text-[#5E6646]/60">{u.email}</p>
+                      </div>
+                      <Badge className={
+                        u.status === 'active' ? 'bg-[#9EB766]/20 text-[#9EB766] hover:bg-[#9EB766]/20' :
+                        'bg-red-100 text-red-700 hover:bg-red-100'
+                      }>
+                        {t(`users.${u.status}` as const)}
+                      </Badge>
+                    </div>
+                    <div className="mt-2 flex items-center justify-between border-t border-[#5E6646]/8 pt-2 text-xs font-bold text-[#5E6646]/70">
+                      <span>{isRtl ? u.roleFa : u.roleEn} · {u.joined}</span>
+                      <div className="flex gap-1">
+                        <button className="grid h-8 w-8 place-items-center rounded-lg bg-white text-[#5E6646]/70" aria-label={t('users.viewProfile')}>
+                          <Eye className="h-3.5 w-3.5" />
+                        </button>
+                        <button
+                          onClick={() => toggleUserStatus(u.id)}
+                          className={`grid h-8 w-8 place-items-center rounded-lg ${u.status === 'active' ? 'bg-red-50 text-red-600' : 'bg-[#9EB766]/10 text-[#9EB766]'}`}
+                          aria-label={u.status === 'active' ? t('users.suspend') : t('users.activate')}
+                        >
+                          {u.status === 'active' ? <Ban className="h-3.5 w-3.5" /> : <CheckCircle2 className="h-3.5 w-3.5" />}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </Card>
           )}
 
           {/* Courses */}
           {tab === 'courses' && (
-            <Card className="animate-fade-in rounded-[2rem] border-0 bg-white/80 p-6 shadow-sm">
+            <Card className="animate-fade-in rounded-[2rem] border-0 bg-white/80 p-4 shadow-sm sm:p-6">
               <h2 className="mb-4 font-black text-[#5E6646]">{t('courses.title')}</h2>
-              <div className="overflow-x-auto">
+
+              {/* Desktop table */}
+              <div className="hidden overflow-x-auto sm:block">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="text-xs font-black uppercase tracking-wider text-[#5E6646]/60">
@@ -247,6 +267,42 @@ export function AdminDashboard() {
                     })}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile cards */}
+              <div className="space-y-3 sm:hidden">
+                {adminCourses.map((c) => {
+                  const course = courses.find((x) => x.slug === c.slug);
+                  return (
+                    <div key={c.slug} className="rounded-2xl border border-[#5E6646]/8 bg-[#F2EED9]/40 p-3">
+                      <div className="flex items-start gap-2">
+                        <span className="text-2xl">{course?.emoji}</span>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm font-black text-[#5E6646]">{course ? (isRtl ? course.titleFa : course.titleEn) : c.slug}</p>
+                          <p className="mt-0.5 truncate text-xs font-bold text-[#5E6646]/60">{isRtl ? c.instructorFa : c.instructorEn}</p>
+                        </div>
+                        <Badge className={
+                          c.status === 'published' ? 'bg-[#9EB766]/20 text-[#9EB766] hover:bg-[#9EB766]/20' :
+                          c.status === 'pending' ? 'bg-yellow-100 text-yellow-700 hover:bg-yellow-100' :
+                          'bg-gray-100 text-gray-700 hover:bg-gray-100'
+                        }>
+                          {t(`courses.${c.status}` as const)}
+                        </Badge>
+                      </div>
+                      <div className="mt-2 flex items-center justify-between border-t border-[#5E6646]/8 pt-2 text-xs font-bold text-[#5E6646]/70">
+                        <span>{c.students.toLocaleString(isRtl ? 'fa-IR' : 'en-US')} {tCommon('students')}</span>
+                        <span className="font-black text-[#5E6646]">{isRtl ? c.revenueLabel.replace(/,/g, '٬') : c.revenueLabel} {tCommon('toman')}</span>
+                        <button
+                          onClick={() => navigate('course-watch', { slug: c.slug })}
+                          className="grid h-8 w-8 place-items-center rounded-lg bg-white text-[#5E6646]/70"
+                          aria-label="View"
+                        >
+                          <Eye className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </Card>
           )}
@@ -305,8 +361,7 @@ export function AdminDashboard() {
               <p className="text-sm font-medium text-[#5E6646]/60">Platform settings placeholder — fees, payout schedule, feature flags.</p>
             </Card>
           )}
-        </main>
-      </div>
+      </DashboardLayout>
     </div>
   );
 }

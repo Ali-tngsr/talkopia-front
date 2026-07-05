@@ -65,7 +65,7 @@ export function AuthModal() {
 
   return (
     <Dialog open={authOpen} onOpenChange={(o) => !o && close()}>
-      <DialogContent className="max-w-md overflow-hidden rounded-[2rem] border-0 p-0 shadow-2xl">
+      <DialogContent className="max-h-[95vh] max-w-md overflow-y-auto rounded-[1.5rem] border-0 p-0 shadow-2xl sm:max-h-[90vh] sm:rounded-[2rem]">
         {/* Top banner */}
         <div className="relative flex justify-center bg-gradient-to-br from-[#F1BD79]/40 via-[#F2EED9] to-[#9EB766]/30 px-6 pb-4 pt-8">
           <button
