@@ -17,7 +17,7 @@ import { TakoMascot } from './TakoMascot';
 export function Navbar() {
   const tNav = useTranslations('Nav');
   const tCommon = useTranslations('Common');
-  const { locale, toggleLocale, navigate, view, openAuth, role, setRole } = useAppStore();
+  const { locale, toggleLocale, navigate, view, openAuth, role, logout } = useAppStore();
   const isRtl = locale === 'fa';
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -80,10 +80,7 @@ export function Navbar() {
         <div className="flex flex-shrink-0 items-center gap-1.5 sm:gap-2">
           {role !== 'guest' ? (
             <Button
-              onClick={() => {
-                setRole('guest');
-                navigate('home');
-              }}
+              onClick={() => logout()}
               variant="ghost"
               className="hidden rounded-full px-4 font-bold text-[#5E6646] hover:bg-[#F2EED9] md:inline-flex"
             >
@@ -175,8 +172,7 @@ export function Navbar() {
                   {role !== 'guest' ? (
                     <button
                       onClick={() => {
-                        setRole('guest');
-                        navigate('home');
+                        logout();
                         setMobileOpen(false);
                       }}
                       className="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-start font-black text-[#5E6646] transition hover:bg-white/60"

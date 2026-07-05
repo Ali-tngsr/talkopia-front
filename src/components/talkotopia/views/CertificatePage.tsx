@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { useLocale, useTranslations } from '@/lib/i18n';
-import { verifyCertificate } from '@/lib/api';
+import { validCertificates } from '@/lib/mockData';
 
 type Result = null | { valid: true; id: string; holderEn: string; holderFa: string; courseEn: string; courseFa: string; issueDate: string; score: number } | { valid: false };
 
@@ -22,7 +22,9 @@ export function CertificatePage() {
     if (!id.trim()) return;
     setLoading(true);
     setResult(null);
-    const data = await verifyCertificate(id.trim());
+    // Simulate network delay — backend doesn't have this endpoint yet
+    await new Promise((r) => setTimeout(r, 500));
+    const data = validCertificates[id.trim().toUpperCase()] ?? null;
     setLoading(false);
     if (data) {
       setResult({ valid: true, id: id.trim().toUpperCase(), ...data });

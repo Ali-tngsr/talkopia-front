@@ -1,11 +1,12 @@
 'use client';
 
-import { ArrowRight, BookOpen, ShoppingBag, Sparkles, Star, ShieldCheck, Users, Globe2 } from 'lucide-react';
+import { ArrowRight, BookOpen, ShoppingBag, Sparkles, Star, ShieldCheck, Users, Globe2, Loader2 } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useLocale, useTranslations } from '@/lib/i18n';
 import { useAppStore } from '@/lib/store';
-import { courses } from '@/lib/mockData';
+import { fetchCourses } from '@/lib/api';
 import { CourseCard } from '@/components/talkotopia/CourseCard';
 import { TakoMascot } from '@/components/talkotopia/TakoMascot';
 
@@ -16,7 +17,13 @@ export function HomePage() {
   const isRtl = locale === 'fa';
   const { navigate } = useAppStore();
 
-  const featuredCourses = courses.slice(0, 4);
+  // Fetch published courses from backend
+  const { data: coursesData, isLoading } = useQuery({
+    queryKey: ['courses', 'featured', locale],
+    queryFn: () => fetchCourses({ page: 1, limit: 4, sort: 'created_at' }),
+    staleTime: 60_000,
+  });
+  const featuredCourses = coursesData?.data ?? [];
 
   return (
     <div className="animate-fade-in">
@@ -105,11 +112,23 @@ export function HomePage() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
-          {featuredCourses.map((course, i) => (
-            <CourseCard key={course.slug} course={course} index={i} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="grid place-items-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-[#9EB766]" />
+          </div>
+        ) : featuredCourses.length === 0 ? (
+          <div className="grid place-items-center py-12 text-center">
+            <p className="text-sm font-bold text-[#5E6646]/60">
+              {isRtl ? 'هنوز دوره‌ای منتشر نشده.' : 'No courses published yet.'}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+            {featuredCourses.map((course, i) => (
+              <CourseCard key={course.slug} course={course} index={i} />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Shop teaser */}

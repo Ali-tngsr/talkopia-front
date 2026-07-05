@@ -8,20 +8,22 @@ interface VideoPlayerProps {
   poster?: string;
   title?: string;
   emoji?: string;
+  videoUrl?: string | null;
 }
 
 /**
  * Self-hosted styled video player. Uses a mock <video> element that
  * simulates playback with progress bar animation (no real video file).
  */
-export function VideoPlayer({ title, emoji = '🦊' }: VideoPlayerProps) {
+export function VideoPlayer({ title, emoji = '🦊', videoUrl }: VideoPlayerProps) {
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
   const [progress, setProgress] = useState(0); // 0-100
-  const [duration] = useState(524); // seconds, mock
+  const [duration, setDuration] = useState(524); // seconds
   const [showControls, setShowControls] = useState(true);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     if (playing) {
@@ -48,7 +50,14 @@ export function VideoPlayer({ title, emoji = '🦊' }: VideoPlayerProps) {
     return `${m}:${s.toString().padStart(2, '0')}`;
   };
 
-  const togglePlay = () => setPlaying((p) => !p);
+  const togglePlay = () => {
+    if (videoRef.current && videoUrl) {
+      if (videoRef.current.paused) videoRef.current.play();
+      else videoRef.current.pause();
+    } else {
+      setPlaying((p) => !p);
+    }
+  };
 
   const handleMouseMove = () => {
     setShowControls(true);
@@ -79,18 +88,37 @@ export function VideoPlayer({ title, emoji = '🦊' }: VideoPlayerProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={() => playing && setShowControls(false)}
     >
-      {/* Faux video surface — animated gradient with mascot */}
-      <div className={`absolute inset-0 bg-gradient-to-br from-[#9EB766] via-[#F1BD79]/40 to-[#5E6646] transition-opacity duration-500 ${progress > 5 ? 'opacity-90' : 'opacity-100'}`}>
-        <div className="grid h-full place-items-center">
-          <div className={`text-[8rem] transition-transform duration-1000 ${playing ? 'scale-110' : 'scale-100'}`}>{emoji}</div>
-        </div>
-        {!playing && progress === 0 && title && (
-          <div className="absolute bottom-8 start-8 end-8 rounded-2xl bg-black/30 p-4 backdrop-blur-sm">
-            <p className="text-sm font-black uppercase tracking-wider text-white/80">Now playing</p>
-            <h3 className="text-2xl font-black text-white drop-shadow-md">{title}</h3>
+      {/* Real video element if URL provided */}
+      {videoUrl ? (
+        <video
+          ref={videoRef}
+          src={videoUrl}
+          className="absolute inset-0 h-full w-full object-contain"
+          onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
+          onTimeUpdate={(e) => {
+            const v = e.currentTarget;
+            setDuration(v.duration || 524);
+            setProgress(v.duration ? (v.currentTime / v.duration) * 100 : 0);
+          }}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+          onClick={togglePlay}
+          playsInline
+        />
+      ) : (
+        /* Faux video surface — animated gradient with mascot */
+        <div className={`absolute inset-0 bg-gradient-to-br from-[#9EB766] via-[#F1BD79]/40 to-[#5E6646] transition-opacity duration-500 ${progress > 5 ? 'opacity-90' : 'opacity-100'}`}>
+          <div className="grid h-full place-items-center">
+            <div className={`text-[8rem] transition-transform duration-1000 ${playing ? 'scale-110' : 'scale-100'}`}>{emoji}</div>
           </div>
-        )}
-      </div>
+          {!playing && progress === 0 && title && (
+            <div className="absolute bottom-8 start-8 end-8 rounded-2xl bg-black/30 p-4 backdrop-blur-sm">
+              <p className="text-sm font-black uppercase tracking-wider text-white/80">Now playing</p>
+              <h3 className="text-2xl font-black text-white drop-shadow-md">{title}</h3>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Big center play button */}
       {!playing && (

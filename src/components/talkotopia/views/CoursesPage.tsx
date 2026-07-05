@@ -1,15 +1,18 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { Search, SlidersHorizontal, Star, X } from 'lucide-react';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Search, SlidersHorizontal, Star, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useLocale, useTranslations } from '@/lib/i18n';
-import { courses, type CourseCategory } from '@/lib/mockData';
+import { fetchCourses } from '@/lib/api';
+import type { Course } from '@/lib/types';
 import { CourseCard } from '@/components/talkotopia/CourseCard';
 
+type CourseCategory = 'art' | 'language' | 'math' | 'music' | 'science' | 'coding';
 const CATEGORIES: CourseCategory[] = ['art', 'language', 'math', 'music', 'science', 'coding'];
 const AGE_GROUPS = ['3-5', '5-9', '6-10', '7-12', '8-13', '8-12', '7-11'];
 
@@ -41,37 +44,45 @@ export function CoursesPage() {
     setSort('popular');
   };
 
-  const filtered = useMemo(() => {
-    let list = courses.filter((c) => {
-      if (search) {
-        const q = search.toLowerCase();
-        if (!c.titleEn.toLowerCase().includes(q) && !c.titleFa.includes(search) && !c.subtitleEn.toLowerCase().includes(q) && !c.subtitleFa.includes(search) && !c.instructorEn.toLowerCase().includes(q) && !c.instructorFa.includes(search)) {
-          return false;
-        }
-      }
-      if (selectedCats.length && !selectedCats.includes(c.category)) return false;
-      if (selectedAges.length && !selectedAges.includes(c.ageGroup)) return false;
-      if (c.rating < minRating) return false;
-      if (c.price > maxPrice) return false;
-      return true;
-    });
+  // Fetch courses from backend. Backend supports page/limit/sort.
+  // Category/age/rating filters are client-side (backend doesn't support them yet).
+  const { data: coursesData, isLoading, error } = useQuery({
+    queryKey: ['courses', 'list', sort, locale],
+    queryFn: () => fetchCourses({ page: 1, limit: 50, sort: sort === 'popular' ? 'created_at' : sort }),
+    staleTime: 30_000,
+  });
 
-    list = [...list].sort((a, b) => {
-      switch (sort) {
-        case 'newest':
-          return 0;
-        case 'priceLow':
-          return a.price - b.price;
-        case 'priceHigh':
-          return b.price - a.price;
-        case 'rating':
-          return b.rating - a.rating;
-        default:
-          return b.studentsCount - a.studentsCount;
+  const allCourses: Course[] = coursesData?.data ?? [];
+
+  // Client-side filter (search, price, rating) — categories/age not in backend yet
+  const filtered = allCourses.filter((c) => {
+    if (search) {
+      const q = search.toLowerCase();
+      if (!c.title.toLowerCase().includes(q) && !(c.description ?? '').toLowerCase().includes(q)) {
+        return false;
       }
-    });
-    return list;
-  }, [search, selectedCats, selectedAges, minRating, maxPrice, sort]);
+    }
+    if (c.price > maxPrice) return false;
+    if (c.status !== 'published') return false;
+    return true;
+  });
+
+  // Client-side sort
+  const sorted = [...filtered].sort((a, b) => {
+    switch (sort) {
+      case 'priceLow':
+        return a.price - b.price;
+      case 'priceHigh':
+        return b.price - a.price;
+      case 'rating':
+        // Backend has no rating field yet — fallback to created_at
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      default:
+        // popular / newest — both by created_at desc
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    }
+  });
+
 
   const FilterPanel = (
     <div className="space-y-6 rounded-[2rem] border border-[#5E6646]/10 bg-white/80 p-5 shadow-sm">
@@ -221,11 +232,26 @@ export function CoursesPage() {
         )}
 
         <main>
+          {isLoading && (
+            <div className="grid place-items-center py-16">
+              <Loader2 className="h-8 w-8 animate-spin text-[#9EB766]" />
+            </div>
+          )}
+          {error && !isLoading && (
+            <div className="rounded-[1.5rem] border border-red-200 bg-red-50 p-6 text-center sm:rounded-[2rem]">
+              <AlertCircle className="mx-auto h-8 w-8 text-red-500" />
+              <p className="mt-3 font-bold text-red-700">
+                {error instanceof Error ? error.message : (isRtl ? 'خطا در دریافت دوره‌ها' : 'Failed to load courses')}
+              </p>
+            </div>
+          )}
+          {!isLoading && !error && (
+            <>
           <p className="mb-3 text-sm font-bold text-[#5E6646]/70 sm:mb-4">
-            <span className="font-black text-[#5E6646]">{isRtl ? filtered.length.toLocaleString('fa-IR') : filtered.length}</span>{' '}
+            <span className="font-black text-[#5E6646]">{isRtl ? sorted.length.toLocaleString('fa-IR') : sorted.length}</span>{' '}
             {t('results')}
           </p>
-          {filtered.length === 0 ? (
+          {sorted.length === 0 ? (
             <div className="rounded-[1.5rem] border border-dashed border-[#5E6646]/20 bg-white/50 p-8 text-center sm:rounded-[2rem] sm:p-12">
               <p className="text-4xl sm:text-5xl">🔍</p>
               <p className="mt-3 font-bold text-[#5E6646]/70 sm:mt-4">{t('empty')}</p>
@@ -235,10 +261,12 @@ export function CoursesPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
-              {filtered.map((c, i) => (
+              {sorted.map((c, i) => (
                 <CourseCard key={c.slug} course={c} index={i} />
               ))}
             </div>
+          )}
+            </>
           )}
         </main>
       </div>

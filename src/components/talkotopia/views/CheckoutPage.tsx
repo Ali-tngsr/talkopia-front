@@ -1,26 +1,29 @@
 'use client';
 
 import { useState } from 'react';
-import { Trash2, ShoppingBag, ShieldCheck, Tag, CheckCircle2, Loader2 } from 'lucide-react';
+import { Trash2, ShoppingBag, ShieldCheck, Tag, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { useLocale, useTranslations } from '@/lib/i18n';
 import { useAppStore } from '@/lib/store';
-import { processPayment } from '@/lib/api';
+import { createOrder, requestPayment, verifyPayment } from '@/lib/api';
+import { useToast } from '@/hooks/use-toast';
 
 export function CheckoutPage() {
   const t = useTranslations('Checkout');
   const tCommon = useTranslations('Common');
   const locale = useLocale();
   const isRtl = locale === 'fa';
-  const { cart, removeFromCart, clearCart, navigate, setRole } = useAppStore();
+  const { cart, removeFromCart, clearCart, navigate, role, openAuth } = useAppStore();
+  const { toast } = useToast();
 
   const [coupon, setCoupon] = useState('');
   const [discountApplied, setDiscountApplied] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'zarinpal' | 'wallet'>('zarinpal');
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const subtotal = cart.reduce((acc, item) => acc + item.price, 0);
   const discount = discountApplied ? Math.round(subtotal * 0.1) : 0;
@@ -30,20 +33,65 @@ export function CheckoutPage() {
   const applyCoupon = () => {
     if (coupon.trim().toUpperCase() === 'TAKO10') {
       setDiscountApplied(true);
+      setError(null);
+    } else {
+      setError(isRtl ? 'کد تخفیف نامعتبر است.' : 'Invalid coupon code.');
     }
   };
 
   const pay = async () => {
+    // Require login
+    if (role === 'guest') {
+      openAuth('login');
+      return;
+    }
+    // Need course IDs — cart items may have id from backend or fallback to slug
+    const courseIds = cart.map((item) => item.id).filter(Boolean) as string[];
+    if (courseIds.length === 0) {
+      setError(isRtl
+        ? 'سبد شما قدیمی است. لطفاً دوره‌ها را دوباره اضافه کنید.'
+        : 'Your cart is stale. Please re-add courses.');
+      return;
+    }
+
     setProcessing(true);
-    await processPayment();
-    setProcessing(false);
-    setSuccess(true);
-    clearCart();
-    setTimeout(() => {
-      setSuccess(false);
-      setRole('student');
-      navigate('student');
-    }, 1800);
+    setError(null);
+    try {
+      // Step 1: create order
+      const order = await createOrder({ course_ids: courseIds });
+
+      // Step 2: request payment (Zarinpal)
+      const payment = await requestPayment(order.id);
+
+      // Step 3: in a real Zarinpal flow, redirect user to payment_url.
+      // For MVP/dev the backend has a manual verify endpoint — we call it directly.
+      if (payment.payment_url && !payment.payment_url.includes('localhost')) {
+        // Real gateway — redirect
+        window.location.href = payment.payment_url;
+        return;
+      }
+
+      // Dev mode: call verify manually with the returned authority
+      const result = await verifyPayment({
+        authority: payment.authority,
+        status: 'OK',
+      });
+
+      setSuccess(true);
+      clearCart();
+      toast({
+        title: isRtl ? 'پرداخت موفق!' : 'Payment Successful!',
+        description: isRtl ? `سفارش #${result.order.id.slice(0, 8)}` : `Order #${result.order.id.slice(0, 8)}`,
+      });
+      setTimeout(() => {
+        setSuccess(false);
+        navigate('student');
+      }, 1800);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'پرداخت ناموفق بود.');
+    } finally {
+      setProcessing(false);
+    }
   };
 
   if (success) {
@@ -89,6 +137,24 @@ export function CheckoutPage() {
       <header className={isRtl ? 'text-right' : 'text-left'}>
         <h1 className="text-2xl font-black text-[#5E6646] sm:text-3xl lg:text-4xl">{t('title')}</h1>
       </header>
+
+      {role === 'guest' && (
+        <div className="mt-4 flex items-start gap-2 rounded-2xl border border-[#F1BD79]/40 bg-[#F1BD79]/10 p-3 text-sm font-bold text-[#5E6646]">
+          <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+          <span>
+            {isRtl
+              ? 'برای تکمیل خرید باید وارد حساب کاربری شوید.'
+              : 'Please sign in to complete your purchase.'}
+          </span>
+        </div>
+      )}
+
+      {error && (
+        <div className="mt-4 flex items-start gap-2 rounded-2xl border border-red-200 bg-red-50 p-3 text-sm font-bold text-red-700">
+          <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+          <span>{error}</span>
+        </div>
+      )}
 
       <div className="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-[1.5fr_1fr]">
         {/* Cart items */}
@@ -204,7 +270,7 @@ export function CheckoutPage() {
 
             <Button
               onClick={pay}
-              disabled={processing}
+              disabled={processing || role === 'guest'}
               className="mt-4 w-full rounded-2xl bg-[#9EB766] py-3 font-black text-white shadow-lg shadow-[#9EB766]/25 hover:bg-[#8aa454] disabled:opacity-70"
             >
               {processing ? (

@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Locale } from './i18n';
+import type { Role, User } from './types';
+import { getStoredAuth, clearStoredAuth } from './auth-storage';
+import { logoutUser } from './auth';
 
 export type ViewKey =
   | 'home'
@@ -16,7 +19,9 @@ export type ViewKey =
   | 'teacher'
   | 'admin';
 
-interface CartItem {
+export interface CartItem {
+  /** Course UUID from backend */
+  id?: string;
   slug: string;
   title: string;
   price: number;
@@ -46,16 +51,40 @@ interface AppState {
   openAuth: (m?: 'login' | 'register') => void;
   closeAuth: () => void;
 
-  role: 'guest' | 'student' | 'teacher' | 'admin';
-  setRole: (r: 'guest' | 'student' | 'teacher' | 'admin') => void;
+  /** Current logged-in user (mirrors localStorage 'talkotopia-auth'). */
+  user: User | null;
+  /** Derived role shortcut: 'guest' when no user. */
+  role: Role | 'guest';
+  setUser: (user: User | null) => void;
+  logout: () => Promise<void>;
+  /** Re-read auth from storage (call after login/register/refresh). */
+  syncAuth: () => void;
+}
+
+function readInitialUser(): User | null {
+  if (typeof window === 'undefined') return null;
+  return getStoredAuth()?.user ?? null;
+}
+
+function roleOf(user: User | null): Role | 'guest' {
+  return user?.role ?? 'guest';
 }
 
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
       locale: 'fa',
-      setLocale: (l) => set({ locale: l }),
-      toggleLocale: () => set({ locale: get().locale === 'fa' ? 'en' : 'fa' }),
+      setLocale: (l) => {
+        set({ locale: l });
+        if (typeof window !== 'undefined') {
+          window.localStorage.setItem('talkotopia-locale', l);
+          window.dispatchEvent(new Event('talkotopia-locale-change'));
+        }
+      },
+      toggleLocale: () => {
+        const next = get().locale === 'fa' ? 'en' : 'fa';
+        get().setLocale(next);
+      },
 
       view: 'home',
       viewParams: {},
@@ -79,12 +108,35 @@ export const useAppStore = create<AppState>()(
       openAuth: (m = 'login') => set({ authOpen: true, authMode: m }),
       closeAuth: () => set({ authOpen: false }),
 
-      role: 'guest',
-      setRole: (r) => set({ role: r }),
+      user: readInitialUser(),
+      role: roleOf(readInitialUser()),
+      setUser: (user) => set({ user, role: roleOf(user) }),
+      syncAuth: () => {
+        const auth = getStoredAuth();
+        set({ user: auth?.user ?? null, role: roleOf(auth?.user ?? null) });
+      },
+      logout: async () => {
+        await logoutUser();
+        clearStoredAuth();
+        set({ user: null, role: 'guest' });
+        get().navigate('home');
+      },
     }),
     {
       name: 'talkotopia-store',
-      partialize: (s) => ({ locale: s.locale, cart: s.cart, role: s.role }),
+      partialize: (s) => ({ locale: s.locale, cart: s.cart }),
     }
   )
 );
+
+// Cross-tab + same-tab auth sync: when localStorage changes, refresh store.
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'talkotopia-auth') {
+      useAppStore.getState().syncAuth();
+    }
+  });
+  window.addEventListener('talkotopia-auth-change', () => {
+    useAppStore.getState().syncAuth();
+  });
+}
