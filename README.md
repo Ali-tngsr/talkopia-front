@@ -122,4 +122,21 @@ MIT — free to use, modify, and distribute.
 
 ---
 
+## 🚀 Push to Your GitHub
+
+This repo is ready to push. After creating an empty repo on GitHub (e.g. `talkotopia-frontend`), run:
+
+```bash
+# Option 1: Use the helper script
+./scripts/push-to-github.sh <your-github-username> talkotopia-frontend
+
+# Option 2: Manual
+git remote add origin https://github.com/<your-username>/talkotopia-frontend.git
+git push -u origin main
+```
+
+> **Note:** When prompted for password, use a [Personal Access Token (PAT)](https://github.com/settings/tokens) — not your GitHub password. Required scopes: `repo`, `workflow`.
+
+---
+
 Made with 🌈 by the Talkotopia team.
