@@ -52,3 +52,10 @@ prompt
 server.log
 # Skills directory
 /skills/
+
+# Sandbox / dev artifacts
+.zscripts/
+download/
+worklog.md
+package-lock.json
+bun.lock
