@@ -17,7 +17,8 @@ export type ViewKey =
   | 'auth-forgot'
   | 'student'
   | 'teacher'
-  | 'admin';
+  | 'admin'
+  | 'downloads';
 
 export interface CartItem {
   /** Course UUID from backend */

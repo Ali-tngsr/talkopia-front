@@ -13,6 +13,7 @@ import { CertificatePage } from '@/components/talkotopia/views/CertificatePage';
 import { StudentDashboard } from '@/components/talkotopia/views/StudentDashboard';
 import { TeacherDashboard } from '@/components/talkotopia/views/TeacherDashboard';
 import { AdminDashboard } from '@/components/talkotopia/views/AdminDashboard';
+import { DownloadsPage } from '@/components/talkotopia/views/DownloadsPage';
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -59,6 +60,7 @@ export default function Home() {
           {view === 'student' && <StudentDashboard />}
           {view === 'teacher' && <TeacherDashboard />}
           {view === 'admin' && <AdminDashboard />}
+          {view === 'downloads' && <DownloadsPage />}
         </main>
 
         <Footer />

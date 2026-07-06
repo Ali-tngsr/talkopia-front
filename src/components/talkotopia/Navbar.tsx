@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Globe2, BookOpen, GraduationCap, Shield, LogOut, Home, Menu, X, Award } from 'lucide-react';
+import { Globe2, BookOpen, GraduationCap, Shield, LogOut, Home, Menu, X, Award, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -32,6 +32,7 @@ export function Navbar() {
     { key: 'teacher', label: tNav('teacher'), icon: Shield },
     { key: 'admin', label: tNav('admin'), icon: Shield },
     { key: 'certificate', label: tNav('certificate'), icon: Award },
+    { key: 'downloads', label: isRtl ? 'دانلودها' : 'Downloads', icon: Download },
   ];
 
   return (
